@@ -59,34 +59,36 @@ function App() {
       <main className="main">
         <h2>Classificador de Tanach</h2>
         <p>Cole um versículo do Tanach e descubra se ele está na Torá, Neviim ou Ketuvim.</p>
-        <textarea
+        <input
+          type="text"
           className="verse-input"
           value={verse}
           onChange={(e) => setVerse(e.target.value)}
           placeholder="Digite ou cole o versículo em hebraico..."
-          rows="4"
         />
         <button className="classify-btn" onClick={handleClassify} disabled={loading}>
           {loading ? <div className="loading"></div> : 'Identificar Seção'}
         </button>
         {result && (
-          <div className="result-card fade-in" style={{ borderColor: getSectionColor(result.prediction) }}>
-            <h3>Resultado</h3>
-            <p className="prediction" style={{ color: getSectionColor(result.prediction) }}>
-              {result.prediction} ({(result.probabilities[result.prediction] * 100).toFixed(1)}%)
-            </p>
-            <div className="probabilities">
-              <h4>Probabilidades:</h4>
-              {Object.entries(result.probabilities).map(([section, prob]) => (
-                <div key={section} className="prob-item">
-                  <span>{section}:</span>
-                  <span>{(prob * 100).toFixed(1)}%</span>
-                </div>
-              ))}
+          <div className="result-container fade-in">
+            <div className="result-circle" style={{ background: `linear-gradient(135deg, ${getSectionColor(result.prediction)}, ${getSectionColor(result.prediction)}dd)` }}>
+              <div className="prediction-name">{result.prediction}</div>
+              <div className="prediction-percentage">{(result.probabilities[result.prediction] * 100).toFixed(1)}%</div>
             </div>
-            <div className="keywords">
-              <h4>Top Keywords:</h4>
-              <p>{result.top_keywords.join(', ')}</p>
+            <div className="result-details">
+              <div className="probabilities">
+                <h4>Probabilidades:</h4>
+                {Object.entries(result.probabilities).map(([section, prob]) => (
+                  <div key={section} className="prob-item">
+                    <span>{section}:</span>
+                    <span>{(prob * 100).toFixed(1)}%</span>
+                  </div>
+                ))}
+              </div>
+              <div className="keywords">
+                <h4>Top Keywords:</h4>
+                <p>{result.top_keywords.join(', ')}</p>
+              </div>
             </div>
           </div>
         )}

@@ -49,19 +49,20 @@
 .verse-input {
   width: 100%;
   max-width: 480px;
-  padding: 10px 12px;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 0.98rem;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
   font-family: 'Inter', sans-serif;
-  resize: vertical;
   margin-bottom: 16px;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  height: 45px;
 }
 
 .verse-input:focus {
   outline: none;
   border-color: var(--soft-gold);
+  box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.1);
 }
 
 .classify-btn {
@@ -85,47 +86,82 @@
   cursor: not-allowed;
 }
 
-.result-card {
-  background: var(--white);
-  border: 1.5px solid;
-  border-radius: 12px;
-  padding: 18px 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  margin: 0 auto;
-  max-width: 360px;
+.result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin: 32px auto 0;
+  max-width: 400px;
+}
+
+.result-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  position: relative;
+  animation: popIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.prediction-name {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
+}
+
+.prediction-percentage {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.result-details {
+  width: 100%;
   text-align: left;
 }
 
-.result-card h3 {
-  font-size: 1.35rem;
-  margin-bottom: 12px;
-  text-align: center;
-  color: var(--deep-blue);
-}
-
-.prediction {
-  font-size: 1.15rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 14px;
+.probabilities, .keywords {
+  margin-bottom: 20px;
 }
 
 .probabilities h4, .keywords h4 {
-  font-size: 1rem;
-  margin-bottom: 8px;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
   color: var(--graphite);
+  font-weight: 600;
 }
 
 .prob-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 4px;
-  font-size: 0.92rem;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  padding: 4px 0;
 }
 
 .keywords p {
   font-style: italic;
   color: #555;
+  line-height: 1.6;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .footer {

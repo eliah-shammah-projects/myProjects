@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanakh Verse Classifier</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #333; }
+        form { display: flex; flex-direction: column; }
+        textarea { padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; resize: vertical; }
+        button { padding: 10px; background-color: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        .result { margin-top: 20px; padding: 10px; background-color: #e9ecef; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Classificador de Versos da Tanakh</h1>
+        <form action="/predict" method="post">
+            <label for="verse">Digite um verso em hebraico:</label>
+            <textarea id="verse" name="verse" rows="4" placeholder="Ex: בראשית ברא אלהים את השמים ואת הארץ" required></textarea>
+            <button type="submit">Classificar</button>
+        </form>
+        {% if result %}
+        <div class="result">
+            <h3>Resultado:</h3>
+            <p><strong>Predição:</strong> {{ result.prediction }} ({{ "%.1f"|format(result.probabilities[result.prediction] * 100) }}%)</p>
+            <p><strong>Probabilidades:</strong></p>
+            <ul>
+                {% for cat, prob in result.probabilities.items() %}
+                <li>{{ cat }}: {{ "%.1f"|format(prob * 100) }}%</li>
+                {% endfor %}
+            </ul>
+            <p><strong>Top Keywords:</strong> {{ ', '.join(result.top_keywords) }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
